@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://join-tsh-api-staging.herokuapp.com/product',
 };

@@ -1,0 +1,11 @@
+<div class="card">
+  <div class="card-container">
+    <div class="card-img">
+      <img [src]="product.image" alt="{{product.name}}">
+    </div>
+    <div class="card-title">{{product.name}}</div>
+    <div class="card-description">{{product.description}}</div>
+    <div class="card-rating"><ngb-rating [max]="5" [rate]="product.rating" [readonly]="true"></ngb-rating></div>
+    <button class="card-button btn btn-block btn-primary" [class.btn-secondary]="!product.active" [disabled]="!product.active">{{product.active ? 'Show Detail' : 'Unavailble'}}</button>
+  </div>
+</div>

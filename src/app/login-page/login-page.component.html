@@ -1,0 +1,19 @@
+<div class="loginContainer">
+  <div class="loginContainer-img"><img src="assets/running-man.png" alt=""></div>
+  <div class="loginContainer-formWrapper">
+    <form class="loginContainer-form" [formGroup]="form" (ngSubmit)="submit()">
+      <h2 class="loginContainer-form--title">Login</h2>
+      <label for="name" class="loginContainer-form--label">Username</label>
+      <input id="name" type="text" class="loginContainer-form--input" placeholder="Username" formControlName="name">
+      <div *ngIf="form.get('name').touched && form.get('name').invalid ">
+        <small>Please provide mail</small>
+      </div>
+      <label for="pass" class="loginContainer-form--label">Password</label>
+      <input id="pass" type="password" class="loginContainer-form--input" placeholder="Password" formControlName="password">
+      <div *ngIf="form.get('password').touched && form.get('password').invalid ">
+        <small>Please provide password</small>
+      </div>
+      <button type="submit" class="loginContainer-form-button" [class.disabled]="form.invalid">Log In</button>
+    </form>
+  </div>
+</div>

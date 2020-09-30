@@ -1,0 +1,52 @@
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div class="navbar-left">
+      <div class="navbar-left-items">
+        <div class="navbar-title">join.tsh.io</div>
+        <div class="navbar-search">
+          <input type="text" [(ngModel)]="filter">
+        </div>
+        <div class="navbar-checkboxes">
+          <div class="check-box-groups">
+            <label class="check-box-lable" for="active">Active</label>
+            <input id="active" class="check-box" type="checkbox" [(ngModel)]="isChekedActive" (change)="isChekedActive? getActive() : getDefault()">
+          </div>
+          <div class="check-box-groups">
+            <label class="check-box-lable" for="promoted">Promoted</label>
+            <input id="promoted" class="check-box" type="checkbox" [(ngModel)]="isChekedPromo" (change)="isChekedPromo? getPromo() : getDefault()">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <div *ngIf="!auth.auth;else img">
+        <button class="navbar-button" (click)="logOuttoApp()">Log In</button>
+      </div>
+      <ng-template #img>
+        <div class="navbar-auth" (mouseenter)="logOut=true" (mouseleave)="logOut=false">
+          <img src="">
+          <div *ngIf="logOut;else hidden">
+
+          </div>
+          <ng-template #hidden>
+            <button class="logOut" (click)="logOutfromApp()">Log Out</button>
+          </ng-template>
+        </div>
+      </ng-template>
+
+    </div>
+
+  </div>
+</nav>
+<div class="product-list" *ngIf="products;else empty">
+    <div class="product-item" *ngFor="let product of products">
+      <app-product [product]="product"></app-product>
+    </div>
+</div>
+<ng-template #empty>
+  <div class="container">
+    sorry there are no products
+  </div>
+</ng-template>
+{{pageNumber}}
+
