@@ -11,6 +11,7 @@ import { ProductComponent } from './product/product.component';
 import {RatingModule} from 'ng-starrating';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { ModalComponent } from './modal/modal.component';
 
 
 
@@ -20,7 +21,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AppComponent,
     MainPageComponent,
     LoginPageComponent,
-    ProductComponent
+    ProductComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

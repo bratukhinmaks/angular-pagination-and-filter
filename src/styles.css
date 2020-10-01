@@ -9,3 +9,7 @@ ul.ngx-pagination.responsive {
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+

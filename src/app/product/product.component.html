@@ -6,6 +6,6 @@
     <div class="card-title">{{product.name}}</div>
     <div class="card-description">{{product.description}}</div>
     <div class="card-rating"><ngb-rating [max]="5" [rate]="product.rating" [readonly]="true"></ngb-rating></div>
-    <button class="card-button btn btn-block btn-primary" [class.btn-secondary]="!product.active" [disabled]="!product.active">{{product.active ? 'Show Detail' : 'Unavailble'}}</button>
+    <button class="card-button btn btn-block btn-primary" (click)="openCurrent(product)" [class.btn-secondary]="!product.active" [disabled]="!product.active">{{product.active ? 'Show Detail' : 'Unavailble'}}</button>
   </div>
 </div>

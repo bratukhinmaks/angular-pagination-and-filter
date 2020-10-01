@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import {HttpService} from '../shared/services/http.service';
 import {Product} from '../shared/models/produc.interface';
 import {StarRatingComponent} from 'ng-starrating';
@@ -16,42 +16,26 @@ import {tap} from 'rxjs/operators';
 
 export class MainPageComponent implements OnInit {
   products: Product[];
-  logOut = false;
+  logOut = true;
   filter: string;
   currentPage = 1;
   pageSizem = 8;
   totaltItems: number;
   pageNumber: number;
-  isChekedActive = false;
-  isChekedPromo = false;
-  constructor(private httpSer: HttpService, public auth: AuthService, private router: Router) {
+  isActive = false;
+  isPromo = false;
+
+  constructor(public httpSer: HttpService, public auth: AuthService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.httpSer.getByPage(this.currentPage)
+    this.httpSer.getAll()
       .pipe(
         tap(v => {
           this.totaltItems = v.totalItems;
         })
       )
       .subscribe(v => this.products = v.items);
-  }
-
-  getDefault() {
-    if (!this.isChekedActive && !this.isChekedPromo){
-      this.httpSer.getByPage(this.currentPage)
-        .pipe(
-          tap(v => {
-            this.totaltItems = v.totalItems;
-          })
-        )
-        .subscribe(v => this.products = v.items);
-    } else if (this.isChekedPromo && !this.isChekedActive) {
-      this.getPromo()
-    } else {
-      this.getActive()
-    }
-
   }
 
   logOutfromApp(): void {
@@ -63,41 +47,43 @@ export class MainPageComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  // tslint:disable-next-line:typedef
-  getActive() {
-    if (this.isChekedPromo){
-      this.httpSer.getCheked()
-        .pipe(
-          tap(v => this.totaltItems = v.totalItems)
-        )
-        .subscribe(v => this.products = v.items);
-    } else {
-      this.httpSer.getActive()
-        .pipe(
-          tap(v => this.totaltItems = v.totalItems)
-        )
-        .subscribe(v => this.products = v.items);
-    }
-  }
-  getPromo(): void {
-    if (this.isChekedActive){
-      this.httpSer.getCheked()
-        .pipe(
-          tap(v => this.totaltItems = v.totalItems)
-        )
-        .subscribe(v => this.products = v.items);
-    } else {
-      this.httpSer.getPromo()
-        .pipe(
-          tap(v => this.totaltItems = v.totalItems)
-        )
-        .subscribe(v => this.products = v.items);
-    }
+  handlePageChange(event: number): void {
+    this.currentPage = event;
+    this.httpSer.getByParams(this.currentPage, this.filter, this.isActive, this.isPromo)
+      .subscribe(v => this.products = v.items);
+    window.scrollTo(0, 0);
   }
 
-  handlePageChange(event: number) {
-    this.currentPage = event;
-    this.httpSer.getByPage(this.currentPage)
-      .subscribe(v => this.products = v.items)
+  getByParams(): void {
+    if (this.isActive === false && this.isPromo === true){
+      this.httpSer.getByParams(this.currentPage, this.filter, null, true)
+        .pipe(
+          tap(v => this.totaltItems = v.totalItems)
+        )
+        .subscribe(v => this.products = v.items);
+    } else if (this.isActive === true && this.isPromo === false){
+      this.httpSer.getByParams(this.currentPage, this.filter, true, null)
+        .pipe(
+          tap(v => this.totaltItems = v.totalItems)
+        )
+        .subscribe(v => this.products = v.items);
+    }
+    this.httpSer.getByParams(this.currentPage, this.filter, this.isActive, this.isPromo)
+      .pipe(
+        tap(v => this.totaltItems = v.totalItems)
+      )
+      .subscribe(v => this.products = v.items);
+  }
+
+  onInputChange(): void {
+    this.httpSer.getByParams(this.currentPage, this.filter, this.isActive, this.isPromo)
+      .pipe(
+        tap(v => {
+          this.totaltItems = v.totalItems;
+          console.log(v.items);
+          console.log(this.filter);
+        })
+      )
+      .subscribe(v => this.products = v.items);
   }
 }

@@ -4,16 +4,16 @@
       <div class="navbar-left-items">
         <div class="navbar-title">join.tsh.io</div>
         <div class="navbar-search">
-          <input type="text" [(ngModel)]="filter" placeholder="Search">
+          <input type="text" [(ngModel)]="filter" (change)="onInputChange()" placeholder="Search">
           <img src="assets/Shape.svg" alt="">
         </div>
         <div class="navbar-checkboxes">
           <div class="check-box-groups">
-            <input id="active" class="check-box" type="checkbox" [(ngModel)]="isChekedActive" (change)="isChekedActive? getActive() : getDefault()">
+            <input id="active" class="check-box" type="checkbox" [(ngModel)]="isActive" (change)="getByParams()">
             <label class="check-box-lable" for="active">Active</label>
           </div>
           <div class="check-box-groups">
-            <input id="promoted" class="check-box" type="checkbox" [(ngModel)]="isChekedPromo" (change)="isChekedPromo? getPromo() : getDefault()">
+            <input id="promoted" class="check-box" type="checkbox" [(ngModel)]="isPromo" (change)="getByParams()">
             <label class="check-box-lable" for="promoted">Promoted</label>
           </div>
         </div>
@@ -24,13 +24,14 @@
         <button class="navbar-button" (click)="logOuttoApp()">Log In</button>
       </div>
       <ng-template #img>
-        <div class="navbar-auth" (mouseenter)="logOut=true" (mouseleave)="logOut=false">
-          <img src="">
+        <div class="navbar-auth" (mouseenter)="logOut=false" (mouseleave)="logOut=true">
+          <img src="assets/man.png">
           <div *ngIf="logOut;else hidden">
-
           </div>
           <ng-template #hidden>
-            <button class="logOut" (click)="logOutfromApp()">Log Out</button>
+            <div class="container-logout">
+              <button class="logOut" (click)="logOutfromApp()">Log Out</button>
+            </div>
           </ng-template>
         </div>
       </ng-template>
@@ -43,6 +44,9 @@
     <div class="product-item" *ngFor="let product of products| paginate:{itemsPerPage: pageSizem,currentPage:currentPage, totalItems:totaltItems}">
       <app-product [product]="product"></app-product>
     </div>
+</div>
+<div *ngIf="httpSer.chosenProduct" class="custom-modal">
+  <app-modal [product] = "httpSer.chosenProduct"></app-modal>
 </div>
 <ng-template #empty>
   <div class="container">
@@ -58,4 +62,5 @@
                      screenReaderPaginationLabel="Pagination"
                      screenReaderPageLabel="page"
                      ></pagination-controls>
+
 
