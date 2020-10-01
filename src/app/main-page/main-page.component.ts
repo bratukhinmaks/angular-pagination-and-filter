@@ -19,6 +19,8 @@ export class MainPageComponent implements OnInit {
   logOut = false;
   filter: string;
   currentPage = 1;
+  pageSizem = 8;
+  totaltItems: number;
   pageNumber: number;
   isChekedActive = false;
   isChekedPromo = false;
@@ -26,18 +28,22 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.httpSer.get(this.currentPage)
+    this.httpSer.getByPage(this.currentPage)
       .pipe(
-        tap(v => this.pageNumber = v.pageCount)
+        tap(v => {
+          this.totaltItems = v.totalItems;
+        })
       )
       .subscribe(v => this.products = v.items);
   }
 
   getDefault() {
-    if(!this.isChekedActive && !this.isChekedPromo){
-      this.httpSer.get(this.currentPage)
+    if (!this.isChekedActive && !this.isChekedPromo){
+      this.httpSer.getByPage(this.currentPage)
         .pipe(
-          tap(v => this.pageNumber = v.pageCount)
+          tap(v => {
+            this.totaltItems = v.totalItems;
+          })
         )
         .subscribe(v => this.products = v.items);
     } else if (this.isChekedPromo && !this.isChekedActive) {
@@ -62,13 +68,13 @@ export class MainPageComponent implements OnInit {
     if (this.isChekedPromo){
       this.httpSer.getCheked()
         .pipe(
-          tap(v => this.pageNumber = v.pageCount)
+          tap(v => this.totaltItems = v.totalItems)
         )
         .subscribe(v => this.products = v.items);
     } else {
       this.httpSer.getActive()
         .pipe(
-          tap(v => this.pageNumber = v.pageCount)
+          tap(v => this.totaltItems = v.totalItems)
         )
         .subscribe(v => this.products = v.items);
     }
@@ -77,15 +83,21 @@ export class MainPageComponent implements OnInit {
     if (this.isChekedActive){
       this.httpSer.getCheked()
         .pipe(
-          tap(v => this.pageNumber = v.pageCount)
+          tap(v => this.totaltItems = v.totalItems)
         )
         .subscribe(v => this.products = v.items);
     } else {
       this.httpSer.getPromo()
         .pipe(
-          tap(v => this.pageNumber = v.pageCount)
+          tap(v => this.totaltItems = v.totalItems)
         )
         .subscribe(v => this.products = v.items);
     }
+  }
+
+  handlePageChange(event: number) {
+    this.currentPage = event;
+    this.httpSer.getByPage(this.currentPage)
+      .subscribe(v => this.products = v.items)
   }
 }

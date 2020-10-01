@@ -4,16 +4,17 @@
       <div class="navbar-left-items">
         <div class="navbar-title">join.tsh.io</div>
         <div class="navbar-search">
-          <input type="text" [(ngModel)]="filter">
+          <input type="text" [(ngModel)]="filter" placeholder="Search">
+          <img src="assets/Shape.svg" alt="">
         </div>
         <div class="navbar-checkboxes">
           <div class="check-box-groups">
-            <label class="check-box-lable" for="active">Active</label>
             <input id="active" class="check-box" type="checkbox" [(ngModel)]="isChekedActive" (change)="isChekedActive? getActive() : getDefault()">
+            <label class="check-box-lable" for="active">Active</label>
           </div>
           <div class="check-box-groups">
-            <label class="check-box-lable" for="promoted">Promoted</label>
             <input id="promoted" class="check-box" type="checkbox" [(ngModel)]="isChekedPromo" (change)="isChekedPromo? getPromo() : getDefault()">
+            <label class="check-box-lable" for="promoted">Promoted</label>
           </div>
         </div>
       </div>
@@ -39,7 +40,7 @@
   </div>
 </nav>
 <div class="product-list" *ngIf="products;else empty">
-    <div class="product-item" *ngFor="let product of products">
+    <div class="product-item" *ngFor="let product of products| paginate:{itemsPerPage: pageSizem,currentPage:currentPage, totalItems:totaltItems}">
       <app-product [product]="product"></app-product>
     </div>
 </div>
@@ -48,5 +49,13 @@
     sorry there are no products
   </div>
 </ng-template>
-{{pageNumber}}
+<pagination-controls (pageChange)="handlePageChange($event)"
+                     maxSize="10"
+                     autoHide="true"
+                     responsive="true"
+                     previousLabel="First"
+                     nextLabel="Last"
+                     screenReaderPaginationLabel="Pagination"
+                     screenReaderPageLabel="page"
+                     ></pagination-controls>
 

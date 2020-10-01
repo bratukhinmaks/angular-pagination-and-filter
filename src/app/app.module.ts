@@ -10,6 +10,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { ProductComponent } from './product/product.component';
 import {RatingModule} from 'ng-starrating';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 
@@ -28,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     HttpClientModule,
     RatingModule,
-    NgbModule
+    NgbModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

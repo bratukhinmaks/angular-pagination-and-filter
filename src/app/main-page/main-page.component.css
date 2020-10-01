@@ -1,7 +1,8 @@
-.product-list{
-  display:flex;
+.product-list {
+  display: flex;
+  background-color: #F2F2F2;
   flex-direction: row;
-  width:100%;
+  width: 100%;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
@@ -12,16 +13,98 @@
   margin: 20px 10px;
   display: flex;
   flex-direction: column;
-  border-radius: 8px ;
+  border-radius: 8px;
   justify-content: space-between;
 }
 
-@media  screen and (max-width: 992px) {
-  .product-list{
-    flex-direction:column;
+.navbar {
+  width: 100%;
+  background-color: #fff;
+  height: 144px;
+}
+
+.navbar-inner {
+  width: 90%;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-left {
+  width: 80%;
+
+}
+
+.navbar-left-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.navbar-right {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.navbar-title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.navbar-search {
+  position: relative;
+  width: 45%;
+}
+
+.navbar-search input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #E0E2EA;
+}
+
+.navbar-search img {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+}
+
+.navbar-checkboxes {
+  width: 20%;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+}
+
+.check-box-lable {
+  font-size: 14px ;
+  font-weight: 600;
+  margin-left: 20px;
+}
+
+pagination-controls {
+  background-color: #E0E2EA;
+  text-align: center;
+  width: 100%;
+  font-size: 14px;
+  color: #1A1B1D;
+}
+
+@media screen and (max-width: 992px) {
+  .product-list {
+    flex-direction: column;
     justify-content: space-between;
   }
+
   .product-item {
     width: 45%;
   }
 }
+
+

@@ -15,14 +15,16 @@ export class HttpService {
 
 
   // @ts-ignore
-  get(pageNum: number): Observable<any> {
+  getByPage(pageNum:number): Observable<any> {
     let params = new HttpParams();
     params = params.append('limit', '8');
     params = params.append('page', `${pageNum}`);
     return this.http.get(`${environment.apiUrl}`,{
       params
     });
-
+  }
+  get(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}`);
   }
   // tslint:disable-next-line:typedef
   getItemById(id: number): Observable<any> {
